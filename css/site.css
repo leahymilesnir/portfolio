@@ -1,0 +1,239 @@
+:root {
+  --bg: #fafafa;
+  --ink: #111111;
+  --muted: #888888;
+  --line: #e5e5e5;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --pad: clamp(1.25rem, 4vw, 2.5rem);
+  --max: 72rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.site-header {
+  width: min(var(--max), 100%);
+  margin-inline: auto;
+  padding: var(--pad) var(--pad) 2rem;
+}
+
+.site-header--compact {
+  padding-bottom: 1.5rem;
+}
+
+.name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  transition: color 0.2s var(--ease);
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.project-heading {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  width: min(var(--max), 100%);
+  margin-inline: auto;
+  padding: 0 var(--pad) var(--pad);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--pad);
+}
+
+.card {
+  display: block;
+}
+
+.card__media {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #eee;
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s var(--ease);
+}
+
+.card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s var(--ease);
+  pointer-events: none;
+}
+
+.card:hover .card__media img,
+.card:focus-visible .card__media img {
+  filter: brightness(0.72);
+}
+
+.card:hover .card__media::after,
+.card:focus-visible .card__media::after {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.card__label {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+
+.card:hover .card__label,
+.card:focus-visible .card__label {
+  opacity: 1;
+}
+
+.gallery {
+  width: min(var(--max), 100%);
+  margin-inline: auto;
+  padding: 0 var(--pad) var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.gallery__item {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+.gallery__item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery__item img,
+.gallery__item video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery__item video {
+  object-fit: cover;
+  margin-inline: auto;
+}
+
+.youtube-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.youtube-embed__player,
+.youtube-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.youtube-mute {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  border: 0;
+  padding: 0.35rem 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 2px;
+  transition: background 0.2s var(--ease);
+}
+
+.youtube-mute:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__media img,
+  .card__media::after,
+  .card__label {
+    transition: none;
+  }
+
+  .gallery__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
